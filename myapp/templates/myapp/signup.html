@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Stroke Risk Analysis System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: url('../myapp/BackagroundImageHospital.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 24px;
+            width: 100%;
+        }
+        nav {
+            text-align: center;
+            background-color: #005bb5;
+            padding: 10px;
+            width: 100%;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0073e6;
+            font-size: 28px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #0073e6;
+            box-shadow: 0 0 5px rgba(0, 115, 230, 0.5);
+        }
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .register-btn:hover {
+            background-color: #005bb5;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #0073e6; /* Blue background color */
+            color: white; /* White text color */
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            margin-top: auto; /* Push footer to the bottom of the page */
+            width: 100%; /* Ensure the footer spans the full width */
+        }
+
+        .footer a {
+            color: white; /* White links */
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline; /* Underline links on hover */
+        }
+
+        .cta-button {
+            background-color: #0073e6;
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Message Styles */
+        .messages {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px;
+                width: 90%;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            .input-group input {
+                font-size: 14px;
+            }
+            .register-btn {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>Stroke Risk Analysis System</header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Risk Assessment</a>
+        <a href="#">Contact</a>
+        <a href="{% url 'login' %}">Login</a>
+    </nav>
+
+    <div class="login-container">
+        <h2>Create Your Account</h2>
+
+        <!-- Display success or error messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+        
+        <div class="footer">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Stroke Risk Analysis | All Rights Reserved
+    </div>
+
+</body>
+</html>

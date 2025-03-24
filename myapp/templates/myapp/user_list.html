@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List - Stroke Risk Analysis System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2rem;
+        }
+        nav {
+            background-color: #0056b3;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1rem;
+        }
+        .container {
+            flex: 1;
+            width: 80%;
+            margin: 20px auto;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #333;
+            color: white;
+            font-size: 1.1rem;
+        }
+        td {
+            background-color: #f9f9f9;
+            font-size: 1rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons button {
+            padding: 5px 10px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #007bff; /* Blue for Edit */
+        }
+        .edit-button:hover {
+            background-color: #0056b3; /* Darker Blue for Edit */
+        }
+        .delete-button {
+            background-color: #dc3545; /* Red for Delete */
+        }
+        .delete-button:hover {
+            background-color: #c82333; /* Darker Red for Delete */
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="width: 80%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <h1>USER'S DASHBOARD</h1>
+        </div>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="#">Risk Assessment</a>
+        <a href="#">Logout</a>
+        <a href="#"> Statistics</a>
+        
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h2>List of Users</h2>
+
+            <!-- Check if there are any users -->
+            {% if users %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Date Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.date_joined }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="edit-button" onclick="window.location.href='/edit/{{ user.id }}'">Edit</button>
+                                        <button class="delete-button" onclick="window.location.href='/delete/{{ user.id }}'">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No users found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Stroke Risk Analysis | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
